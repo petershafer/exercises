@@ -1,0 +1,200 @@
+<html>
+<head>
+<script src="index.js"></script>
+<script src="doStuff.js"></script>
+<style>
+  #container{
+    width: 1200px;
+  }
+  .row {
+    margin-bottom: 5px;
+  }
+  .cell {
+    float: left;
+    text-align: center;
+    background-color: #c0c0c0;
+    min-height: 20px;
+    margin: 0px;
+  }
+  #cell {
+    width: 100%;
+  }
+  .row1 .cell {
+    width: 50%;
+  }
+  .row2 .cell {
+    width: 25%;
+  }
+  .row3 .cell {
+    width: 12.5%;
+  }
+  .row4 .cell {
+    width: 6.25%;
+  }
+  .row5 .cell {
+    width: 3.125%;
+  }
+  .row6 .cell {
+    width: 3.125%;
+    width: 1.5625%;
+  }
+  p {
+    clear: both;
+  }
+</style>
+</head>
+<body>
+
+  <div id="container">
+    <div class="row">
+      <div class="cell" id="cell"> </div>
+    </div>
+    <div class="row row1">
+      <div class="cell" id="cell0"> </div>
+      <div class="cell" id="cell1"> </div>
+    </div>
+    <div class="row row2">
+      <div class="cell" id="cell00"> </div>
+      <div class="cell" id="cell01"> </div>
+      <div class="cell" id="cell10"> </div>
+      <div class="cell" id="cell11"> </div>
+    </div>
+    <div class="row row3">
+      <div class="cell" id="cell000"> </div>
+      <div class="cell" id="cell001"> </div>
+      <div class="cell" id="cell010"> </div>
+      <div class="cell" id="cell011"> </div>
+      <div class="cell" id="cell100"> </div>
+      <div class="cell" id="cell101"> </div>
+      <div class="cell" id="cell110"> </div>
+      <div class="cell" id="cell111"> </div>
+    </div>
+    <div class="row row4">
+      <div class="cell" id="cell0000"> </div>
+      <div class="cell" id="cell0001"> </div>
+      <div class="cell" id="cell0010"> </div>
+      <div class="cell" id="cell0011"> </div>
+      <div class="cell" id="cell0100"> </div>
+      <div class="cell" id="cell0101"> </div>
+      <div class="cell" id="cell0110"> </div>
+      <div class="cell" id="cell0111"> </div>
+      <div class="cell" id="cell1000"> </div>
+      <div class="cell" id="cell1001"> </div>
+      <div class="cell" id="cell1010"> </div>
+      <div class="cell" id="cell1011"> </div>
+      <div class="cell" id="cell1100"> </div>
+      <div class="cell" id="cell1101"> </div>
+      <div class="cell" id="cell1110"> </div>
+      <div class="cell" id="cell1111"> </div>
+    </div>
+    <div class="row row5">
+      <div class="cell" id="cell00000"> </div>
+      <div class="cell" id="cell00001"> </div>
+      <div class="cell" id="cell00010"> </div>
+      <div class="cell" id="cell00011"> </div>
+      <div class="cell" id="cell00100"> </div>
+      <div class="cell" id="cell00101"> </div>
+      <div class="cell" id="cell00110"> </div>
+      <div class="cell" id="cell00111"> </div>
+      <div class="cell" id="cell01000"> </div>
+      <div class="cell" id="cell01001"> </div>
+      <div class="cell" id="cell01010"> </div>
+      <div class="cell" id="cell01011"> </div>
+      <div class="cell" id="cell01100"> </div>
+      <div class="cell" id="cell01101"> </div>
+      <div class="cell" id="cell01110"> </div>
+      <div class="cell" id="cell01111"> </div>
+      <div class="cell" id="cell10000"> </div>
+      <div class="cell" id="cell10001"> </div>
+      <div class="cell" id="cell10010"> </div>
+      <div class="cell" id="cell10011"> </div>
+      <div class="cell" id="cell10100"> </div>
+      <div class="cell" id="cell10101"> </div>
+      <div class="cell" id="cell10110"> </div>
+      <div class="cell" id="cell10111"> </div>
+      <div class="cell" id="cell11000"> </div>
+      <div class="cell" id="cell11001"> </div>
+      <div class="cell" id="cell11010"> </div>
+      <div class="cell" id="cell11011"> </div>
+      <div class="cell" id="cell11100"> </div>
+      <div class="cell" id="cell11101"> </div>
+      <div class="cell" id="cell11110"> </div>
+      <div class="cell" id="cell11111"> </div>
+    </div>
+    <div class="row row6">
+      <div class="cell" id="cell000000"> </div>
+      <div class="cell" id="cell000001"> </div>
+      <div class="cell" id="cell000010"> </div>
+      <div class="cell" id="cell000011"> </div>
+      <div class="cell" id="cell000100"> </div>
+      <div class="cell" id="cell000101"> </div>
+      <div class="cell" id="cell000110"> </div>
+      <div class="cell" id="cell000111"> </div>
+      <div class="cell" id="cell001000"> </div>
+      <div class="cell" id="cell001001"> </div>
+      <div class="cell" id="cell001010"> </div>
+      <div class="cell" id="cell001011"> </div>
+      <div class="cell" id="cell001100"> </div>
+      <div class="cell" id="cell001101"> </div>
+      <div class="cell" id="cell001110"> </div>
+      <div class="cell" id="cell001111"> </div>
+      <div class="cell" id="cell010000"> </div>
+      <div class="cell" id="cell010001"> </div>
+      <div class="cell" id="cell010010"> </div>
+      <div class="cell" id="cell010011"> </div>
+      <div class="cell" id="cell010100"> </div>
+      <div class="cell" id="cell010101"> </div>
+      <div class="cell" id="cell010110"> </div>
+      <div class="cell" id="cell010111"> </div>
+      <div class="cell" id="cell011000"> </div>
+      <div class="cell" id="cell011001"> </div>
+      <div class="cell" id="cell011010"> </div>
+      <div class="cell" id="cell011011"> </div>
+      <div class="cell" id="cell011100"> </div>
+      <div class="cell" id="cell011101"> </div>
+      <div class="cell" id="cell011110"> </div>
+      <div class="cell" id="cell011111"> </div>
+      <div class="cell" id="cell100000"> </div>
+      <div class="cell" id="cell100001"> </div>
+      <div class="cell" id="cell100010"> </div>
+      <div class="cell" id="cell100011"> </div>
+      <div class="cell" id="cell100100"> </div>
+      <div class="cell" id="cell100101"> </div>
+      <div class="cell" id="cell100110"> </div>
+      <div class="cell" id="cell100111"> </div>
+      <div class="cell" id="cell101000"> </div>
+      <div class="cell" id="cell101001"> </div>
+      <div class="cell" id="cell101010"> </div>
+      <div class="cell" id="cell101011"> </div>
+      <div class="cell" id="cell101100"> </div>
+      <div class="cell" id="cell101101"> </div>
+      <div class="cell" id="cell101110"> </div>
+      <div class="cell" id="cell101111"> </div>
+      <div class="cell" id="cell110000"> </div>
+      <div class="cell" id="cell110001"> </div>
+      <div class="cell" id="cell110010"> </div>
+      <div class="cell" id="cell110011"> </div>
+      <div class="cell" id="cell110100"> </div>
+      <div class="cell" id="cell110101"> </div>
+      <div class="cell" id="cell110110"> </div>
+      <div class="cell" id="cell110111"> </div>
+      <div class="cell" id="cell111000"> </div>
+      <div class="cell" id="cell111001"> </div>
+      <div class="cell" id="cell111010"> </div>
+      <div class="cell" id="cell111011"> </div>
+      <div class="cell" id="cell111100"> </div>
+      <div class="cell" id="cell111101"> </div>
+      <div class="cell" id="cell111110"> </div>
+      <div class="cell" id="cell111111"> </div>
+    </div>
+  </div>
+
+  <p><button onClick="reset()">Reset</button> <button onClick="balance()">Balance</button></p>
+  <p>
+    <input id="someJSON" />
+    <button onClick="custom(someJSON.value, true)">Reset &amp; Insert</button>
+    <button onClick="custom(someJSON.value)">Insert</button>
+  </p>
+
+</body>
+</html>
