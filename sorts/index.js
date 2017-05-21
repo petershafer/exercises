@@ -11,6 +11,18 @@ class xArray {
     }
   }
 
+  shuffle(){
+    const arr = this.data;
+    const next = [];
+    while(arr.length > 0){
+      let temp = arr.splice(Math.floor(Math.random() * arr.length),1).pop();
+      next.push(temp);
+    }
+    this.log(next);
+    this.log("-=-=-=-=-=-=-=");
+    this.data = next;
+  }
+
   selectionSort() {
     const arr = this.data;
     this.log(arr);
