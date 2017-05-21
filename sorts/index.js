@@ -62,6 +62,24 @@ class xArray {
     this.data = arr;
   }
 
+  insertionSort() {
+    const arr = this.data;
+    for(let i = 1; i < arr.length; i++){
+      let j = i-1;
+      while(arr[i] < arr[j] && j >= 0){
+        j--;
+      }
+      let temp = arr.splice(i,1).pop();
+      arr.splice(j+1,0,temp);
+      this.log(arr);
+    }
+    this.data = arr;
+  }
+
+  mergeSort(arr, baseCase=true) {
+
+  }
+
 }
 
 var data = new xArray([7,6,5,4,3,2,1], true);
