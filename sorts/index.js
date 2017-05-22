@@ -151,4 +151,55 @@ class xArray {
     }
   }
 
+  quickSort(start=0, finish=this.data.length-1) {
+    // Quicksort will sort an array of values by selecting a pivot and
+    // then creating two sub-arrays of values that are less than the
+    // pivot and then greater than the pivot. Each sub-array is then
+    // quicksorted, until the sub-arrays cannot be divided any further.
+    let partition = (start, finish) => {
+      // We will just use the last value in the sub-array as our pivot.
+      let pivot = this.data[finish];
+      // The variable i represents where the "less-than" sub-array ends.
+      // The start variable will also indicate where it begins.
+      let i = start;
+      // Walk all values in the sub-array
+      for(let j = start; j < finish; j++){
+        // If we find that the next value is less than the pivot, we'll
+        // swap it to the end of the "less-than" sub-array and increment
+        // the value of i to indicate this sub-array has grown. In doing
+        // this, we move the value that is being swapped into the "less-
+        // than" sub-array with an item that's already been walked and 
+        // assigned to the "greater-than" sub-array. Since j will be 
+        // incremented, these values will not be inadvertantly re-processed.
+        if(this.data[j] <= pivot){
+          let temp = this.data[i];
+          this.data[i] = this.data[j];
+          this.data[j] = temp;
+          i = i + 1;
+        }
+      }
+      // Swap the pivot to the end of the "less-than" sub-array and move
+      // the first value in the "greater-than" sub-array to the end of it.
+      // Since we don't need to assume the "greater-than" sub-array is
+      // sorted, we can move these values around at our convenience.
+      let temp = this.data[i];
+      this.data[i] = this.data[finish];
+      this.data[finish] = temp;
+      // Pass back the index of the pivot so that quicksort can call
+      // itself on the "less-than" and "greater-than" sub-arrays.
+      return i;
+    }
+    // Check to see if the sub-array we're handling actually contains values.
+    if(start < finish){
+      // Determine how to partition the sub-array into less-than and greater-
+      // than sub-arrays.  Partition will create these sub-arrays (as a side-
+      // effect) and return the index of the pivots.
+      let pivot = partition(start, finish);
+      // Recursively call quicksort on the partitioned sub-arrays.
+      this.quickSort(start, pivot - 1);
+      this.quickSort(pivot + 1, finish);
+    }
+    this.log(this.data);
+  }
+
 }
