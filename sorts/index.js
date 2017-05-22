@@ -152,8 +152,3 @@ class xArray {
   }
 
 }
-
-var data = new xArray([7,6,5,4,3,2,1], true);
-
-//data.selectionSort();
-data.bubbleSort();
