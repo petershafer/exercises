@@ -96,9 +96,17 @@ class xArray {
     this.data = arr;
   }
 
-  mergeSort(start=0, finish=this.data.length) {
+  mergeSort(start=0, finish=this.data.length, basecase=true) {
+    // Merge sort will recursively decompose the array into individual
+    // values, and then merge them together in sorted order. Then the
+    // sorted sets are merged together in sorted order as recursion
+    // progresses, until the entire array has been sorted.
     let merge = (arr1, arr2) => {
+      // Merge will create a new array of sorted values which will
+      // be returned to mergesort.
       let sorted = [];
+      // While there are values in both given arrays, select the lesser
+      // of the two and add them to the newly sorted array.
       while(arr1.length && arr2.length){
         if(arr1[0] < arr2[0]){
           sorted.push(arr1.shift());
@@ -106,21 +114,38 @@ class xArray {
           sorted.push(arr2.shift());
         }
       }
+      // Add any remaining values from the first array to the new array.
+      // (We can assume that this only occurs if the second array is now empty,
+      // and that the remaining elements in the array are already sorted.)
       while(arr1.length){
         sorted.push(arr1.shift());
       }
+      // Add any remaining values from the second array to the new array.
+      // (We can assume that this only occurs if the second array is now empty,
+      // and that the remaining elements in the array are already sorted.)
       while(arr2.length){
         sorted.push(arr2.shift());
       }
       return sorted;
     }
+    // If we're being asked to perform mergesort on more than one value, then
+    // recursively call mergesort on those values.
     if(finish - start > 1){
+      // Compose two arrays, each representing one half of the values being
+      // requested to be sorted.
       const arr1 = this.mergeSort(start, start + Math.floor((finish - start)/2), false);
       const arr2 = this.mergeSort(start + Math.floor((finish - start)/2), finish, false);
+      // Merge the two halves and then splice it into 
       const merged = merge(arr1, arr2);
-      this.data.splice(start, merged.length, ...merged);
-      this.log(this.data);
-      return merged;
+      if(this.debug){
+        this.data.splice(start, merged.length, ...merged);
+        this.log(this.data);
+      }
+      if(basecase){
+        this.data = merged;
+      }else{
+        return merged;
+      }
     }else{
       return finish - start > 0 ? [this.data[start]] : [];
     }
