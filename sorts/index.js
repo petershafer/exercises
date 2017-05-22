@@ -96,8 +96,34 @@ class xArray {
     this.data = arr;
   }
 
-  mergeSort(arr, baseCase=true) {
-
+  mergeSort(start=0, finish=this.data.length) {
+    let merge = (arr1, arr2) => {
+      let sorted = [];
+      while(arr1.length && arr2.length){
+        if(arr1[0] < arr2[0]){
+          sorted.push(arr1.shift());
+        }else{
+          sorted.push(arr2.shift());
+        }
+      }
+      while(arr1.length){
+        sorted.push(arr1.shift());
+      }
+      while(arr2.length){
+        sorted.push(arr2.shift());
+      }
+      return sorted;
+    }
+    if(finish - start > 1){
+      const arr1 = this.mergeSort(start, start + Math.floor((finish - start)/2), false);
+      const arr2 = this.mergeSort(start + Math.floor((finish - start)/2), finish, false);
+      const merged = merge(arr1, arr2);
+      this.data.splice(start, merged.length, ...merged);
+      this.log(this.data);
+      return merged;
+    }else{
+      return finish - start > 0 ? [this.data[start]] : [];
+    }
   }
 
 }
