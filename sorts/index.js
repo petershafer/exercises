@@ -269,4 +269,92 @@ class xArray {
     }
   }
 
+  nativeSort(){
+    this.data.sort((a, b) => a - b);
+  }
+
+  sort(algorithm="nativeSort"){
+    switch(algorithm){
+      case "nativeSort":
+        this.nativeSort();
+        break;
+      case "heapSort":
+        this.heapSort();
+        break;
+      case "mergeSort":
+        this.mergeSort();
+        break;
+      case "quickSort":
+        this.quickSort();
+        break;
+      case "bubbleSort":
+        this.bubbleSort();
+        break;
+      case "insertionSort":
+        this.insertionSort();
+        break;
+      case "selectionSort":
+        this.selectionSort();
+        break;
+    }
+  }
+
+  isSorted(){
+    for(let i = 1; i < this.data.length; i++){
+      if(this.data[i] < this.data[i-1]){
+        return false;
+      }
+    }
+    return true;
+  }
+
 }
+
+/* Utility Functions */
+
+var buildRandomArray = (size=1000) => {
+  var arr = [];
+  for(let i = 0; i < size; i++){
+    arr.push(Math.floor(Math.random()*size));
+  }
+  return arr;
+}
+
+var validate = (data) => {
+  if(!data.isSorted()){
+    console.log("!! VALUES NOT SORTED");
+  }
+}
+
+var testPerformance = (algorithm, values) => {
+  var data = new xArray(values.slice());
+  console.time(algorithm);
+  data.sort(algorithm);
+  console.timeEnd(algorithm);
+  validate(data);
+}
+
+/* Basic validation of sorts. */
+// var data = new xArray([7,6,5,4,3,2,1], true);
+// var data = new xArray([1,2,3,4,5,6,7], true);
+// data.shuffle();
+// console.log(data);
+// data.selectionSort();
+// data.bubbleSort();
+// data.insertionSort();
+// data.mergeSort();
+// data.quickSort();
+// data.heapSort();
+// console.log(data);
+
+
+/* Sort performance tracking. */
+var values = buildRandomArray(100000);
+
+testPerformance("heapSort", values);
+testPerformance("nativeSort", values);
+testPerformance("quickSort", values);
+testPerformance("mergeSort", values);
+testPerformance("bubbleSort", values);
+testPerformance("insertionSort", values);
+testPerformance("selectionSort", values);
