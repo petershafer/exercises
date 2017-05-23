@@ -270,17 +270,40 @@ class xArray {
   }
 
   countingSort(k=Math.max(...this.data)+1){
+    // Counting sort works by creating a temporary array that represents
+    // all values in the original array as indices into this new array.
+    // By lopoing through the items, you can tally the number of times
+    // it occurs using the value as an index. Then by incrementally summing
+    // those tallies, they can be used to create a new array and be used
+    // as offsets into that new array, ultimately producing the sorted list.
+    // NOTE: Much of the advantage of using the counting sort algorithm
+    // comes with two assumptions. 1) All values are positive integers! This
+    // will not work for negative integers or other floating point values.
+    // We aren't using comparisons to sort the values, but the inherent 
+    // properties of arrays as data structures. 2) That we can provide the
+    // maximum value from the array.  While this method will calculate it
+    // by default, that WILL incur overhead and hurt performance. Explicitly
+    // provide this value when possible.
     let sorted = [];
     let tallies = [];
+    // Initialize the tally array to zero.
     for(let i = 0; i < k; i++){
       tallies[i] = 0;
     }
+    // Iterate through the array and increment the tally value, using the
+    // current value as an index into the tallies array. 
     for(let j = 0; j < this.data.length; j++){
       tallies[this.data[j]]++;
     }
+    // Iterate through the tallies array, and transform each value to be
+    // the sum of the number of instances a smaller value is tallied before it.
     for(let i = 1; i < k; i++){
       tallies[i] = tallies[i] + tallies[i - 1];
     }
+    // Iterate through the original array and use it's values as an index into
+    // the tallies array to calculate an index into the sorted array, and then
+    // place that value into the sorted array. Decrement the tally so that 
+    // any repeated values will be placed in the sorted array correctly.
     for(let j = this.data.length - 1; j >= 0; j--){
       sorted[tallies[this.data[j]]-1] = this.data[j];
       tallies[this.data[j]]--;
