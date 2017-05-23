@@ -269,6 +269,25 @@ class xArray {
     }
   }
 
+  countingSort(k=Math.max(...this.data)+1){
+    let sorted = [];
+    let tallies = [];
+    for(let i = 0; i < k; i++){
+      tallies[i] = 0;
+    }
+    for(let j = 0; j < this.data.length; j++){
+      tallies[this.data[j]]++;
+    }
+    for(let i = 1; i < k; i++){
+      tallies[i] = tallies[i] + tallies[i - 1];
+    }
+    for(let j = this.data.length - 1; j >= 0; j--){
+      sorted[tallies[this.data[j]]-1] = this.data[j];
+      tallies[this.data[j]]--;
+    }
+    this.data = sorted;
+  }
+
   nativeSort(){
     this.data.sort((a, b) => a - b);
   }
@@ -295,6 +314,9 @@ class xArray {
         break;
       case "selectionSort":
         this.selectionSort();
+        break;
+      case "countingSort":
+        this.countingSort();
         break;
     }
   }
@@ -345,16 +367,16 @@ var testPerformance = (algorithm, values) => {
 // data.mergeSort();
 // data.quickSort();
 // data.heapSort();
+// data.countingSort();
 // console.log(data);
 
-
 /* Sort performance tracking. */
-var values = buildRandomArray(100000);
-
-testPerformance("heapSort", values);
-testPerformance("nativeSort", values);
-testPerformance("quickSort", values);
-testPerformance("mergeSort", values);
-testPerformance("bubbleSort", values);
-testPerformance("insertionSort", values);
-testPerformance("selectionSort", values);
+// var values = buildRandomArray(100000);
+// testPerformance("countingSort", values);
+// testPerformance("heapSort", values);
+// testPerformance("nativeSort", values);
+// testPerformance("quickSort", values);
+// testPerformance("mergeSort", values);
+// testPerformance("bubbleSort", values);
+// testPerformance("insertionSort", values);
+// testPerformance("selectionSort", values);
