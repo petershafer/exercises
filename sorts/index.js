@@ -202,4 +202,71 @@ class xArray {
     this.log(this.data);
   }
 
+  maxHeapify(i=0, heapSize=this.data.length){
+    // Max-heapify will perform one pass through the heap/tree at the specified
+    // node, and bubble up larger values from its children, then repeat the process
+    // for each node that a value bubbles up from.
+    // We need to set left and right in a manner that works with zero-indexing.
+    // If this weren't zero-indexed, we could use left = 2*i and right = 2*i+1.
+    let left = 2*(i+1)-1;
+    let right = 2*(i+1);
+    let largest = null;
+    // Check if the left child is larger than the current value. Remember which
+    // is the larger value.
+    if(left < heapSize && this.data[left] > this.data[i]){
+      largest = left;
+    }else{
+      largest = i;
+    }
+    // Check to see if the previous larger value is larger than the right child.
+    if(right < heapSize && this.data[right] > this.data[largest]){
+      largest = right;
+    }
+    // If a child needs to bubble up to the top...
+    if(largest != i){
+      // Swap the current value with the larger child.
+      let temp = this.data[i];
+      this.data[i] = this.data[largest];
+      this.data[largest] = temp;
+      // Run max-heapify for the child that was just replaced.
+      this.maxHeapify(largest, heapSize);
+    }
+  }
+
+  buildMaxHeap(heapSize=this.data.length){
+    // To initially make a heap a max-heap, we need to call heapify enough
+    // times to settle the values in the tree where the leaves are the smallest
+    // values, and the root is the largest. Since each row of children in the 
+    // heap/tree is twice the number of parents, we only need to run maxHeapify
+    // for the first half of values in the array to settle the values as desired.
+    for(let i = Math.floor(heapSize/2); i >= 0; i--){
+      this.maxHeapify(i);
+    }
+  }
+
+  heapSort(){
+    // Heap sort uses the properties of a max-heap to arrange values
+    // of an array in-place, in ascending order. It takes the first value
+    // of the array, which is assumed to be the largest value, and moves
+    // it to the end of the array, and partitions off the sorted values
+    // from the heap values.
+    // First, the array has to be built into a max-heap.
+    this.buildMaxHeap();
+    this.log(this.data);
+    // We'll start with the size of the heap being the size of the array.
+    let heapSize = this.data.length;
+    // Repeatedly pull the top value from the heap.
+    for(let i = this.data.length-1; i >= 1; i--){
+      // Swap the top of the heap to the back of the array where the partition is.
+      let temp = this.data[0];
+      this.data[0] = this.data[i];
+      this.data[i] = temp;
+      // Reduce the heap size to move the partition.
+      heapSize--;
+      // Run maxHeapify once to restore the max-heap property.
+      this.maxHeapify(0, heapSize);
+      this.log(this.data);
+    }
+  }
+
 }
