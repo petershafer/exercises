@@ -312,6 +312,12 @@ class xArray {
   }
 
   radixSort(k = Math.floor(Math.log10(Math.max(...this.data)))+1){
+    // Radix sort collates values into order by using a stable sort by each digit.
+    // We use a separate implementation of the counting sort here to accomplish that.
+    // Check the stand-alone countingSort method for more info on how it works.
+    // We have to assume we're working with non-negative integers, and unless K
+    // (the maximum number of digits) is provided, there is a performance overhead
+    // in calculating that.
     var digitSort = (arr, digit) => {
       let getDigit = (value) => {
         return Math.floor(value/(Math.pow(10,digit)))%10;
@@ -334,7 +340,11 @@ class xArray {
       }
       this.data = sorted;
     }
+    // This is the heart of radix sort. We'll loop as many times as there are digits
+    // that can be sorted by, and we'll sort by them in ascending magnitude. 
     for(let i = 0; i < k; i++){
+      // DigitSort is just countingSort where we sort the values by one of their digits
+      // rather than by the entire value.
       digitSort(this.data, i);
       this.log(this.data);
     }
