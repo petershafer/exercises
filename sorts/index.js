@@ -311,6 +311,35 @@ class xArray {
     this.data = sorted;
   }
 
+  radixSort(k = Math.floor(Math.log10(Math.max(...this.data)))+1){
+    var digitSort = (arr, digit) => {
+      let getDigit = (value) => {
+        return Math.floor(value/(Math.pow(10,digit)))%10;
+      };
+      let k = 10;
+      let sorted = [];
+      let tallies = [];
+      for(let i = 0; i < k; i++){
+        tallies[i] = 0;
+      } 
+      for(let j = 0; j < this.data.length; j++){
+        tallies[getDigit(this.data[j])]++;
+      }
+      for(let i = 1; i < k; i++){
+        tallies[i] = tallies[i] + tallies[i - 1];
+      }
+      for(let j = this.data.length - 1; j >= 0; j--){
+        sorted[tallies[getDigit(this.data[j])]-1] = this.data[j];
+        tallies[getDigit(this.data[j])]--;
+      }
+      this.data = sorted;
+    }
+    for(let i = 0; i < k; i++){
+      digitSort(this.data, i);
+      this.log(this.data);
+    }
+  }
+
   nativeSort(){
     this.data.sort((a, b) => a - b);
   }
@@ -322,6 +351,9 @@ class xArray {
         break;
       case "heapSort":
         this.heapSort();
+        break;
+      case "radixSort":
+        this.radixSort();
         break;
       case "mergeSort":
         this.mergeSort();
@@ -395,6 +427,7 @@ var testPerformance = (algorithm, values) => {
 
 /* Sort performance tracking. */
 // var values = buildRandomArray(100000);
+// testPerformance("radixSort", values);
 // testPerformance("countingSort", values);
 // testPerformance("heapSort", values);
 // testPerformance("nativeSort", values);
