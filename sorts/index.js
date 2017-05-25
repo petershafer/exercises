@@ -397,6 +397,8 @@ class xArray {
 
 }
 
+module.exports = xArray;
+
 /* Utility Functions */
 
 var buildRandomArray = (size=1000) => {
