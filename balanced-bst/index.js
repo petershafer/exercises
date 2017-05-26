@@ -140,3 +140,6 @@ class bst {
 
   }
 }
+
+module.exports.node = node;
+module.exports.bst = bst;
