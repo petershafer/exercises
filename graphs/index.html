@@ -27,7 +27,7 @@ function render(graph, target){
   var nodes = new vis.DataSet(graph.nodes.map((node) => node.obj()));
 
   // create an array with edges
-  var edges = new vis.DataSet(graph.edges.map((edge) => Object.assign(edge.obj(), {'arrows': 'to'})));
+  var edges = new vis.DataSet(graph.edges.map((edge) => Object.assign(edge.obj(), {'arrows': 'to', 'label': edge.weight})));
 
   // create a network
   var container = document.getElementById(target);

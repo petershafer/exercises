@@ -12,12 +12,13 @@ class node {
 }
 
 class edge {
-  constructor(from, to){
+  constructor(from, to, weight=1){
     if(!from || !to){
       throw("Edge requires 'from' and 'to' to be specified!");
     }
     this.from = from;
     this.to = to;
+    this.weight = weight;
   }
   obj(){
     return { 'from': this.from, 'to': this.to };
@@ -68,7 +69,7 @@ class graph {
 
 }
 
-var randomGraph = function(nodeNum=10, edgeNum=10){
+var randomGraph = function(nodeNum=10, edgeNum=10, weightRange=3){
   let nodes = [];
   let edges = [];
   for(let i = 0; i < nodeNum; i++){
@@ -76,10 +77,11 @@ var randomGraph = function(nodeNum=10, edgeNum=10){
   }
   for(let i = 0; i < edgeNum; i++){
     let copyNodes = nodes.slice();
-    let selectTo, selectFrom;
+    let selectTo, selectFrom, weight;
     selectFrom = copyNodes.splice(Math.floor(Math.random()*copyNodes.length),1).pop()[0];
     selectTo = copyNodes.splice(Math.floor(Math.random()*copyNodes.length),1).pop()[0];
-    edges.push([selectTo, selectFrom]);
+    weight = Math.ceil(Math.random()*weightRange);
+    edges.push([selectTo, selectFrom, weight]);
   }
   return {'nodes': nodes, 'edges': edges};
 }
