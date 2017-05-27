@@ -40,10 +40,12 @@ function render(graph, target){
 }
 
 var test = new graph()
-test.addNode("hello");
-test.addNode("world");
-test.addEdge("hello", "world")
-test.addEdge("world", "hello")
+var randomData = randomGraph(15,25);
+test.bulkAdd(randomData);
+// test.addNode("hello");
+// test.addNode("world");
+// test.addEdge("hello", "world")
+// test.addEdge("world", "hello")
 render(test, 'graph');
 
 </script>

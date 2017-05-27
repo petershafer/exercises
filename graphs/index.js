@@ -68,4 +68,20 @@ class graph {
 
 }
 
+var randomGraph = function(nodeNum=10, edgeNum=10){
+  let nodes = [];
+  let edges = [];
+  for(let i = 0; i < nodeNum; i++){
+    nodes.push([`node${i}`]);
+  }
+  for(let i = 0; i < edgeNum; i++){
+    let copyNodes = nodes.slice();
+    let selectTo, selectFrom;
+    selectFrom = copyNodes.splice(Math.floor(Math.random()*copyNodes.length),1).pop()[0];
+    selectTo = copyNodes.splice(Math.floor(Math.random()*copyNodes.length),1).pop()[0];
+    edges.push([selectTo, selectFrom]);
+  }
+  return {'nodes': nodes, 'edges': edges};
+}
+
 
