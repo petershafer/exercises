@@ -26,7 +26,7 @@ class edge {
 }
 
 class graph {
-  constructor(graphToCopy){
+  constructor(directional=true, graphToCopy){
     if(graphToCopy && graphToCopy instanceof graph){
       this.nodes = graphToCopy.nodes.slice();
       this.edges = graphToCopy.edges.slice();
@@ -34,6 +34,7 @@ class graph {
       this.nodes = [];
       this.edges = [];
     }
+    this.directional = directional;
   }
   addNode(id, label){
     if(this.hasNode(id)){
@@ -66,7 +67,12 @@ class graph {
       data.edges.forEach((item) => this.edges.push(new edge(...item)));
     }
   }
-
+  obj(){
+    return {
+      'nodes': this.nodes.map((node) => node.obj()),
+      'edges': this.edges.map((edge) => edge.obj())
+    }
+  }
 }
 
 var randomGraph = function(nodeNum=10, edgeNum=10, weightRange=3){
@@ -78,8 +84,8 @@ var randomGraph = function(nodeNum=10, edgeNum=10, weightRange=3){
   for(let i = 0; i < edgeNum; i++){
     let copyNodes = nodes.slice();
     let selectTo, selectFrom, weight;
-    selectFrom = copyNodes.splice(Math.floor(Math.random()*copyNodes.length),1).pop()[0];
-    selectTo = copyNodes.splice(Math.floor(Math.random()*copyNodes.length),1).pop()[0];
+    [selectFrom] = copyNodes.splice(Math.floor(Math.random()*copyNodes.length),1).pop();
+    [selectTo] = copyNodes.splice(Math.floor(Math.random()*copyNodes.length),1).pop();
     weight = Math.ceil(Math.random()*weightRange);
     edges.push([selectTo, selectFrom, weight]);
   }

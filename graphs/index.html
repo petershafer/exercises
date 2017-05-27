@@ -27,7 +27,7 @@ function render(graph, target){
   var nodes = new vis.DataSet(graph.nodes.map((node) => node.obj()));
 
   // create an array with edges
-  var edges = new vis.DataSet(graph.edges.map((edge) => Object.assign(edge.obj(), {'arrows': 'to', 'label': edge.weight})));
+  var edges = new vis.DataSet(graph.edges.map((edge) => Object.assign(edge.obj(), {'label': edge.weight}, graph.directional ? {'arrows': 'to'} : {})));
 
   // create a network
   var container = document.getElementById(target);
@@ -39,7 +39,7 @@ function render(graph, target){
   var network = new vis.Network(container, data, options);
 }
 
-var test = new graph()
+var test = new graph(false)
 var randomData = randomGraph(15,25);
 test.bulkAdd(randomData);
 // test.addNode("hello");
