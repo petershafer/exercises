@@ -59,6 +59,20 @@ class graph {
   removeEdge(from, to){
     this.edges = this.edges.filter((edge) => edge.from != from || edge.to != to);
   }
+  edgesTo(id){
+    if(this.directional){
+      return this.edges.filter((edge) => edge.to == id);
+    }else{
+      return this.edges.filter((edge) => edge.to == id || edge.from == id);
+    }
+  }
+  edgesFrom(id){
+    if(this.directional){
+      return this.edges.filter((edge) => edge.from == id);
+    }else{
+      return this.edges.filter((edge) => edge.to == id || edge.from == id);
+    }
+  }
   bulkAdd(data){
     if(data && data.nodes){
       data.nodes.forEach((item) => this.nodes.push(new node(...item)));
