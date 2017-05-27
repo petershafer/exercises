@@ -1,0 +1,53 @@
+
+<!doctype html>
+<html>
+<head>
+  <title>Network | Basic usage</title>
+
+  <script type="text/javascript" src="node_modules/vis/dist/vis.js"></script>
+  <script type="text/javascript" src="index.js"></script>
+  <link href="node_modules/vis/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+
+  <style type="text/css">
+    .renderSpace {
+      width: 600px;
+      height: 400px;
+      border: 1px solid lightgray;
+    }
+  </style>
+</head>
+<body>
+
+<div class="renderSpace" id="graph"></div>
+
+<script type="text/javascript">
+
+function render(graph, target){
+  // create an array with nodes
+  var nodes = new vis.DataSet(graph.nodes.map((node) => node.obj()));
+
+  // create an array with edges
+  var edges = new vis.DataSet(graph.edges.map((edge) => Object.assign(edge.obj(), {'arrows': 'to'})));
+
+  // create a network
+  var container = document.getElementById(target);
+  var data = {
+    nodes: nodes,
+    edges: edges
+  };
+  var options = {};
+  var network = new vis.Network(container, data, options);
+}
+
+var test = new graph()
+test.addNode("hello");
+test.addNode("world");
+test.addEdge("hello", "world")
+test.addEdge("world", "hello")
+render(test, 'graph');
+
+</script>
+
+
+</body>
+</html>
