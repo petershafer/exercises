@@ -91,22 +91,46 @@ class graph {
   }
 
   kruskalMST(){
+    // The Kruskal MST algorithm generates an MST from a graph by sorting
+    // edges by weight and then creating a new graph by adding them in
+    // by nondecreasing order if the edge's two vertices do not already 
+    // belong to the same set.
+    // Rather than using sets as a data structure, we'll use an object
+    // that references nodes (vertices) as the index, and the value represents
+    // the set that the node currently belongs to.
     const sets = {};
-    let i = 0;
     this.nodes.forEach((node) => {
-      sets[node.id] = i++;
+      // Each node starts in its own set. We can use the total number
+      // of properties for the sets object to generate the next new set #.
+      sets[node.id] = Object.keys(sets).length;
     });
+    // The following list will store the edges to be used for the MST.
     const edges = [];
+    // Sort the edges based on their weight. We need to specify a comparison
+    // function to be able to sort these custom edge instances. Subtracting
+    // the weight of the first from the second will yield the correct response.
     this.edges.sort((a, b) => a.weight - b.weight);
+    // Iterate through all edges in the original graph and selectively add
+    // them to the MST based on which sets the nodes belong to.
     this.edges.forEach((edge) => {
+      // If we add an edge that connects two nodes in the same set, we'll
+      // introduce a cycle into the tree. Only proceed if they differ.
       if(sets[edge.from] != sets[edge.to]){
+        // Since we know we're connecting two trees, push the edge to the list
+        // used to generate the MST.
         edges.push(edge);
+        // The rest of the code effectively implements the union operation
+        // for the provided set management object.
         let target = sets[edge.to];
         for(node in sets){
+          // Basically, if the node belongs to the same set as the second
+          // node in the given edge, change its set to be the same as for
+          // the first node in the given edge.
           sets[node] = sets[node] == target ? sets[edge.from] : sets[node];
         }
       }
     });
+    // Replace the original graph's edges with the edges collected for the MST.
     this.edges = edges;
   }
 }
