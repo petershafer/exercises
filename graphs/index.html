@@ -42,11 +42,12 @@ function render(graph, target){
   var network = new vis.Network(container, data, options);
 }
 
-var test1 = new graph(true)
-var test2 = new graph(true)
-var randomData = randomGraph(10,15,25);
+var test1 = new graph(false)
+var test2 = new graph(false)
+var randomData = randomGraph(5,10,10);
 test1.bulkAdd(randomData);
 test2.bulkAdd(randomData);
+test2.kruskalMST();
 // test.addNode("hello");
 // test.addNode("world");
 // test.addEdge("hello", "world")

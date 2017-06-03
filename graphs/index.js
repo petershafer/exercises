@@ -89,6 +89,26 @@ class graph {
       'edges': this.edges.map((edge) => edge.obj())
     }
   }
+
+  kruskalMST(){
+    const sets = {};
+    let i = 0;
+    this.nodes.forEach((node) => {
+      sets[node.id] = i++;
+    });
+    const edges = [];
+    this.edges.sort((a, b) => a.weight - b.weight);
+    this.edges.forEach((edge) => {
+      if(sets[edge.from] != sets[edge.to]){
+        edges.push(edge);
+        let target = sets[edge.to];
+        for(node in sets){
+          sets[node] = sets[node] == target ? sets[edge.from] : sets[node];
+        }
+      }
+    });
+    this.edges = edges;
+  }
 }
 
 var randomGraph = function(nodeNum=10, edgeNum=10, weightRange=3){
