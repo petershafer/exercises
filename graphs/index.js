@@ -19,6 +19,8 @@ class edge {
     this.from = from;
     this.to = to;
     this.weight = weight;
+    edge.counter = edge.counter || 0;
+    this.id = edge.counter++;
   }
   obj(){
     return { 'from': this.from, 'to': this.to };
@@ -42,9 +44,9 @@ class graph {
     }
     this.nodes.push(new node(id, label));
   }
-  addEdge(from, to){
+  addEdge(from, to, weight){
     if(this.hasNode(from) && this.hasNode(to)){
-      this.edges.push(new edge(from, to));
+      this.edges.push(new edge(...arguments));
     }else{
       throw("Cannot add edge since it references non-existent node.");
     }
@@ -56,8 +58,8 @@ class graph {
     this.nodes = this.nodes.filter((node) => node.id != id);
     this.edges = this.edges.filter((edge) => edge.from != id && edge.to != id);
   }
-  removeEdge(from, to){
-    this.edges = this.edges.filter((edge) => edge.from != from || edge.to != to);
+  removeEdge(id){
+    this.edges = this.edges.filter((edge) => edge.id != id);
   }
   edgesTo(id){
     if(this.directional){
