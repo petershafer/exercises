@@ -23,7 +23,7 @@ class edge {
     this.id = edge.counter++;
   }
   obj(){
-    return { 'from': this.from, 'to': this.to };
+    return { 'from': this.from, 'to': this.to, 'weight': this.weight };
   }
 }
 
@@ -88,6 +88,53 @@ class graph {
       'nodes': this.nodes.map((node) => node.obj()),
       'edges': this.edges.map((edge) => edge.obj())
     }
+  }
+
+  primMST(){
+    // The Prim MST algorithm generates an MST from a graph by selecting
+    // an arbitrary node (vertex) and progressively adding edges that connect 
+    // it to vertices outside of the tree.
+    // We'll use the actual javascript set data structure here since we only
+    // need to determine whether a vertex belongs to a single tree or not.
+    const nodes = new Set([this.nodes[0].id]);
+    // The following list will store the edges to be used for the MST.
+    const edges = [];
+    // Sort the edges based on their weight. We need to specify a comparison
+    // function to be able to sort these custom edge instances. Subtracting
+    // the weight of the first from the second will yield the correct response.
+    // Other implementations may use a min-priority queue for this.
+    this.edges.sort((a, b) => a.weight - b.weight);
+    // We will need to repeat this process N times, where N is the number of
+    // vertices in the graph.
+    for(let i = 0; i < this.nodes.length; i++){
+      // Next, we'll search the edges of the graph until we find one that 
+      // joins a new vertex to the MST we're building.
+      for(let i = 0; i < this.edges.length; i++){
+        let edge = this.edges[i];
+        // Basically, the criteria we use is that one end of the edge has
+        // to connect to a vertex that's already in the tree, and the other
+        // must connect to a vertex that's not in the tree. We can't assume
+        // the order here: from does not indicate that the edge originates
+        // from a vertex that already belongs to the MST.
+        if((nodes.has(edge.to) && !nodes.has(edge.from)) 
+          || (!nodes.has(edge.to) && nodes.has(edge.from))){
+          // If our criteria is met, we grow the MST by one node/vertex
+          edges.push(edge);
+          // And then include the nodes that the egde connects in the set of
+          // notes connected to the tree.  The javascript set allows us to
+          // add values redundantly without having duplicate values. Since 
+          // we can't assume which property holds the vertex that isn't already
+          // in the tree, we just add both.
+          nodes.add(edge.to);
+          nodes.add(edge.from);
+          // We can break out of the internal loop now since the criteria has
+          // changed and we need to re-evaluate edges we passed over already
+          // that previously might not have met our criteria.
+          break;
+        }
+      }
+    }
+    this.edges = edges;
   }
 
   kruskalMST(){
