@@ -182,21 +182,55 @@ class graph {
   }
 
   dijkstraSSSP(source){
+    // The Dijkstra algorithm for calculating the set of single-source shortest
+    // paths in a graph determines the quickest way to get from one node in a 
+    // graph to every other node in the graph. This is done by progressively
+    // building a tree from a given graph and source node and calculating the
+    // distance to each node connecting to that tree.
+    // To start, we're going to create an array for storing the nodes we've already
+    // performed calculations on, and a queue that will allow us to select the
+    // next closest node to run further calculations from. The queue will initialize
+    // all nodes to have a distance of Infinity, except the source, which will
+    // have a distance of zero. These are organized into pairs.
     const scanned = [];
     const queue = this.nodes.map((node) => node.id == source ? [node, 0] : [node, Infinity]);
-    let node, weight, path, nextNode, adj;
+    // We need to repeat the following steps until the queue is empty.
     while(queue.length > 0){
+      // It should be noted that a priority queue will most likely offer the best
+      // performance. For now, we'll trust the JS engine to optimize this process.
+      // The node will the shortest distance will be first in the queue. Pop it and
+      // then add it to the scanned list of nodes.
       queue.sort(([, weightA], [, weightB]) => weightA - weightB);
-      nextNode = queue.shift();
-      [node, weight, path] = nextNode;
+      let nextNode = queue.shift();
       scanned.push(nextNode);
-      adj = this.edgesFrom(node.id);
+      // Use destructured assignments to break up the pairs into variables.
+      let [node, weight,] = nextNode;
+      // Next, we'll get a list of edges connecting to the given node. Bear in mind
+      // that this does not yet exclude edges to nodes we've already run calculations for.
+      let adj = this.edgesFrom(node.id);
+      // We'll want to inspect each edge.
       adj.forEach((edge) => {
+        // Since we can't necessarily assume this is a directed graph, we need to inspect
+        // and determine if the "to" or "from" attribute represents to adjacent node. 
         let connectedNodeID = edge.to == node ? edge.from : edge.to;
-        let connectedNode, cNode, cWeight, cPath;
-        connectedNode = queue.findIndex(([node,,]) => node.id == connectedNodeID);
+        // And since we need the pair in the queue to inspect the calculated distance and
+        // edge associated with that distance, let's search the queue for a pair where the
+        // node matches the ID in the edge. I've decided to maintain this data apart from
+        // the graph itself in order to simplify its data structures as much as possible.
+        // Using findIndex certainly represents a performance hit, but I think this is
+        // an optimization that's warranted in more specific use cases.
+        let connectedNode = queue.findIndex(([node,,]) => node.id == connectedNodeID);
+        // Given that we didn't exclude edges to nodes we've already processed, it's possible
+        // that we didn't find the appropriate data pair in the queue. Let's skip this
+        // step if it wasn't found, because we're already done with that node.
         if(connectedNode != -1){
-          [cNode, cWeight, cPath] = queue[connectedNode];
+          // Once again, let's use destructured assignment to get the previously calculated
+          // distance for the node.
+          let [,cWeight,] = queue[connectedNode];
+          // If the edge we're evaluating represents a distance shorted than that already
+          // calculated for the given node, then let's update the node/weight pair in the
+          // queue, and furthermore store a reference to the edge associated with traveling
+          // that distance.
           if(weight + edge.weight < cWeight){
             queue[connectedNode][1] = weight + edge.weight;
             queue[connectedNode][2] = edge;
@@ -204,6 +238,9 @@ class graph {
         }
       });
     }
+    // Now we can extract the edges making up the tree of shortest paths from the source
+    // and replace the existing list of edges with it to convert this graph to a tree
+    // of single-source shortest paths.
     this.edges = scanned.map(([node, weight, edge]) => edge).filter((edge) => edge);
   }
 }
