@@ -180,6 +180,32 @@ class graph {
     // Replace the original graph's edges with the edges collected for the MST.
     this.edges = edges;
   }
+
+  dijkstraSSSP(source){
+    const scanned = [];
+    const queue = this.nodes.map((node) => node.id == source ? [node, 0] : [node, Infinity]);
+    let node, weight, path, nextNode, adj;
+    while(queue.length > 0){
+      queue.sort(([, weightA], [, weightB]) => weightA - weightB);
+      nextNode = queue.shift();
+      [node, weight, path] = nextNode;
+      scanned.push(nextNode);
+      adj = this.edgesFrom(node.id);
+      adj.forEach((edge) => {
+        let connectedNodeID = edge.to == node ? edge.from : edge.to;
+        let connectedNode, cNode, cWeight, cPath;
+        connectedNode = queue.findIndex(([node,,]) => node.id == connectedNodeID);
+        if(connectedNode != -1){
+          [cNode, cWeight, cPath] = queue[connectedNode];
+          if(weight + edge.weight < cWeight){
+            queue[connectedNode][1] = weight + edge.weight;
+            queue[connectedNode][2] = edge;
+          }
+        }
+      });
+    }
+    this.edges = scanned.map(([node, weight, edge]) => edge).filter((edge) => edge);
+  }
 }
 
 var randomGraph = function(nodeNum=10, edgeNum=10, weightRange=3){
