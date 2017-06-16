@@ -1,0 +1,28 @@
+<html>
+<head>
+  <style>
+  .delete {
+    background-color: red;
+  }
+  .insert {
+    background-color: green;
+  }
+  </style>
+</head>
+<body>
+  <p><input id="before" onChange="rerender()"></p>
+  <p><input id="after" onChange="rerender()"></p>
+  <div id="output"></div>
+  <script src="highlight.js"></script>
+  <script>
+    var data = highlight.findDiffs("hello world","hell0 w0rld");
+    var options = { 'inserts': true, 'deleted': true, 'insertClass': 'insert', 'deleteClass': 'delete' };
+    highlight.render(data, options, 'output');
+    function rerender(){
+      var data = highlight.findDiffs(document.getElementById('before').value, document.getElementById('after').value, "word");
+      var options = { 'inserts': true, 'deleted': true, 'insertClass': 'insert', 'deleteClass': 'delete' };
+      highlight.render(data, options, 'output');
+    }
+  </script>
+</body>
+</html>
