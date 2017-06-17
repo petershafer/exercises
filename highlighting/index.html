@@ -1,25 +1,48 @@
 <html>
 <head>
   <style>
+  body {
+    font-family: "Lucida Console", Monaco, monospace;
+  }
+  .delete, .insert, .default {
+    padding: 5px 0px;
+  }
   .delete {
     background-color: red;
   }
   .insert {
     background-color: green;
   }
+  .default {
+    background-color: gray;
+  }
+  input {
+    font-family: "Lucida Console", Monaco, monospace;
+    padding: 5px;
+  }
+  #output {
+    padding: 10px;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: gray;
+    border-width: 1px;
+    width: 400px;
+  }
   </style>
 </head>
 <body>
-  <p><input id="before" onChange="rerender()"></p>
-  <p><input id="after" onChange="rerender()"></p>
-  <div id="output"></div>
+  <p>Before <input id="before" onChange="rerender()" onKeyup="rerender()"></p>
+  <p>After <input id="after" onChange="rerender()" onKeyup="rerender()"></p>
+  <p>
+    By Character <input type="radio" name="by" value="character" onChange="rerender()" checked> 
+    By Word <input type="radio" name="by" value="word" onChange="rerender()"></p>
+  <div id="output">&nbsp;</div>
   <script src="highlight.js"></script>
   <script>
-    var data = highlight.findDiffs("hello world","hell0 w0rld");
-    var options = { 'inserts': true, 'deleted': true, 'insertClass': 'insert', 'deleteClass': 'delete' };
-    highlight.render(data, options, 'output');
     function rerender(){
-      var data = highlight.findDiffs(document.getElementById('before').value, document.getElementById('after').value, "word");
+      var data = highlight.findDiffs(document.getElementById('before').value, 
+                                      document.getElementById('after').value, 
+                                      document.querySelector('input[name="by"]:checked').value);
       var options = { 'inserts': true, 'deleted': true, 'insertClass': 'insert', 'deleteClass': 'delete' };
       highlight.render(data, options, 'output');
     }

@@ -52,7 +52,7 @@ var highlight = (function(){
     return [output, key, by]
   };
   var render = (data, options, destination) => {
-    let { inserts, deletes, deleted, insertClass, deleteClass, sameClass } = options;
+    let { inserts=true, deletes, deleted=true, insertClass, deleteClass, sameClass } = options;
     let [union, key, by] = data;
     let mode = 0;
     let output = "";
@@ -61,7 +61,7 @@ var highlight = (function(){
       if(mode != key[i] && i > 0){
         output += `</span><span class="${classList[key[i]+1]}">`;
         mode = key[i];
-      }else if(mode != key[i]){
+      }else if(mode != key[i] || i == 0){
         output += `<span class="${classList[key[i]+1]}">`;
         mode = key[i];
       }
