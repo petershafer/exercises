@@ -9,13 +9,10 @@
     padding: 5px 0px;
   }
   .delete {
-    background-color: red;
+    background-color: #FFCCCC;
   }
   .insert {
-    background-color: green;
-  }
-  .default {
-    background-color: gray;
+    background-color: #CCFFCC;
   }
   input {
     font-family: "Lucida Console", Monaco, monospace;
@@ -35,8 +32,8 @@
   <p>Before <input id="before" onChange="rerender()" onKeyup="rerender()"></p>
   <p>After <input id="after" onChange="rerender()" onKeyup="rerender()"></p>
   <p>
-    By Character <input type="radio" name="by" value="character" onChange="rerender()" checked> 
-    By Word <input type="radio" name="by" value="word" onChange="rerender()"></p>
+    <label for="bycharacter">By Character</label> <input id="bycharacter" type="radio" name="by" value="character" onChange="rerender()" checked> 
+    <label for="byword">By Word</label> <input id="byword" type="radio" name="by" value="word" onChange="rerender()"></p>
   <div id="output">&nbsp;</div>
   <script src="highlight.js"></script>
   <script>
